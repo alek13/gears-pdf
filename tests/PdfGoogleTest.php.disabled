@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 ////////////////////////////////////////////////////////////////////////////////
 
-use Gears\String as Str;
+use Gears\String\Str;
 use SGH\PdfBox\PdfBox;
 
 class PdfGoogleTest extends PHPUnit_Framework_TestCase
@@ -43,7 +43,7 @@ class PdfGoogleTest extends PHPUnit_Framework_TestCase
 
 		$text = $this->pdfBox->textFromPdfFile('./tests/output/GoogleConvert.pdf');
 
-		$this->assertTrue(Str::contains($text, 'Demonstration of DOCX support'));
+		$this->assertTrue(Str::s($text)->contains('Demonstration of DOCX support'));
 	}
 
 	public function testSetValue()
@@ -53,7 +53,7 @@ class PdfGoogleTest extends PHPUnit_Framework_TestCase
 		$document->setValue('name', 'Brad Jones');
 		$document->save('./tests/output/GoogleSetValue.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleSetValue.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleSetValue.pdf'))->toAscii();
 
 		$this->assertTrue($text->contains('Hello Brad Jones.'));
 	}
@@ -65,7 +65,7 @@ class PdfGoogleTest extends PHPUnit_Framework_TestCase
 		$document->cloneBlock('CLONEME', 3);
 		$document->save('./tests/output/GoogleCloneBlock.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleCloneBlock.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleCloneBlock.pdf'))->toAscii();
 
 		$this->assertFalse($text->contains('${CLONEME}'));
 		$this->assertEquals(3, substr_count($text, 'PHPWord can apply font'));
@@ -79,7 +79,7 @@ class PdfGoogleTest extends PHPUnit_Framework_TestCase
 		$document->replaceBlock('REPLACEME', '<w:p><w:pPr><w:pStyle w:val="PreformattedText"/><w:rPr/></w:pPr><w:r><w:rPr/><w:t>I am replaced.</w:t></w:r></w:p>');
 		$document->save('./tests/output/GoogleReplaceBlock.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleReplaceBlock.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleReplaceBlock.pdf'))->toAscii();
 
 		$this->assertFalse($text->contains('${REPLACEME}'));
 		$this->assertTrue($text->contains('I am replaced.'));
@@ -93,7 +93,7 @@ class PdfGoogleTest extends PHPUnit_Framework_TestCase
 		$document->deleteBlock('DELETEME');
 		$document->save('./tests/output/GoogleDeleteBlock.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleDeleteBlock.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleDeleteBlock.pdf'))->toAscii();
 
 		$this->assertFalse($text->contains('${DELETEME}'));
 		$this->assertFalse($text->contains('This should be deleted.'));
@@ -143,7 +143,7 @@ class PdfGoogleTest extends PHPUnit_Framework_TestCase
 
 		$document->save('./tests/output/GoogleCloneRow.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleCloneRow.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/GoogleCloneRow.pdf'))->toAscii();
 
 		$this->assertTrue($text->contains('Value 1: Sun'));
 		$this->assertTrue($text->contains('Value 2: Mercury'));

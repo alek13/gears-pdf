@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 ////////////////////////////////////////////////////////////////////////////////
 
-use Gears\String as Str;
+use Gears\String\Str;
 use SGH\PdfBox\PdfBox;
 
 class PdfPhantomJsTest extends PHPUnit_Framework_TestCase
@@ -34,10 +34,10 @@ class PdfPhantomJsTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertFileExists('./tests/output/PhantomJsConvert.pdf');
 		
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/PhantomJsConvert.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/PhantomJsConvert.pdf'))->toAscii();
+
+		$this->assertTrue($text->contains("I\tam\tthe\tcover\tpage."));
 		
-		$this->assertTrue($text->contains('Iamthecoverpage.'));
-		
-		$this->assertTrue($text->contains('B15/15'));
+		$this->assertTrue($text->contains("B\n15\t/\t15"));
 	}
 }

@@ -1,7 +1,7 @@
 {
-	"name": "gears/pdf",
+	"name": "alek13/gears-pdf",
 	"description": "A PDF builder using HTML or DOCX templates.",
-	"homepage": "https://github.com/phpgearbox/pdf",
+	"homepage": "https://github.com/alek13/pdf",
 	"keywords": ["pdf", "docx", "template", "builder", "converter"],
 	"license": "MIT",
 	"autoload":
@@ -14,7 +14,7 @@
 	"require":
 	{
 		"gears/di": "*",
-		"gears/string": "^0.6.0",
+		"gears/string": "^1.1",
 		"symfony/process": "2.*",
 		"symfony/filesystem": "2.*",
 		"jakoch/phantomjs-installer": "1.9.8"

@@ -13,7 +13,7 @@
 
 use SplFileInfo;
 use RuntimeException;
-use Gears\String as Str;
+use Gears\String\Str;
 use Gears\Di\Container;
 use Gears\Pdf\TempFile;
 
@@ -121,7 +121,7 @@ class Pdf extends Container
 		}
 		
 		// Check for a HTML string
-		elseif (Str::contains($document, 'DOCTYPE'))
+		elseif (Str::s($document)->contains('DOCTYPE'))
 		{
 			// Again lets save a temp file
 			$this->document = $this->tempFile($document, 'html');

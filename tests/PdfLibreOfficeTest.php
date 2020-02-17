@@ -11,7 +11,7 @@
 // -----------------------------------------------------------------------------
 ////////////////////////////////////////////////////////////////////////////////
 
-use Gears\String as Str;
+use Gears\String\Str;
 use SGH\PdfBox\PdfBox;
 
 class PdfLibreOfficeTest extends PHPUnit_Framework_TestCase
@@ -33,7 +33,7 @@ class PdfLibreOfficeTest extends PHPUnit_Framework_TestCase
 	{
 		Gears\Pdf::convert('./tests/templates/Convert.docx', './tests/output/LibreOfficeConvert.pdf', ['converter' => $this->converter]);
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeConvert.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeConvert.pdf'))->toAscii();
 
 		$this->assertTrue($text->contains('Demonstration of DOCX support'));
 	}
@@ -45,7 +45,7 @@ class PdfLibreOfficeTest extends PHPUnit_Framework_TestCase
 		$document->setValue('name', 'Brad Jones');
 		$document->save('./tests/output/LibreOfficeSetValue.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeSetValue.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeSetValue.pdf'))->toAscii();
 
 		$this->assertTrue($text->contains('Hello Brad Jones.'));
 	}
@@ -57,7 +57,7 @@ class PdfLibreOfficeTest extends PHPUnit_Framework_TestCase
 		$document->cloneBlock('CLONEME', 3);
 		$document->save('./tests/output/LibreOfficeCloneBlock.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeCloneBlock.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeCloneBlock.pdf'))->toAscii();
 
 		$this->assertFalse($text->contains('${CLONEME}'));
 		$this->assertEquals(3, substr_count($text, 'PHPWord can apply font'));
@@ -71,7 +71,7 @@ class PdfLibreOfficeTest extends PHPUnit_Framework_TestCase
 		$document->replaceBlock('REPLACEME', '<w:p><w:pPr><w:pStyle w:val="PreformattedText"/><w:rPr/></w:pPr><w:r><w:rPr/><w:t>I am replaced.</w:t></w:r></w:p>');
 		$document->save('./tests/output/LibreOfficeReplaceBlock.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeReplaceBlock.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeReplaceBlock.pdf'))->toAscii();
 
 		$this->assertFalse($text->contains('${REPLACEME}'));
 		$this->assertTrue($text->contains('I am replaced.'));
@@ -85,7 +85,7 @@ class PdfLibreOfficeTest extends PHPUnit_Framework_TestCase
 		$document->deleteBlock('DELETEME');
 		$document->save('./tests/output/LibreOfficeDeleteBlock.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeDeleteBlock.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeDeleteBlock.pdf'))->toAscii();
 
 		$this->assertFalse($text->contains('${DELETEME}'));
 		$this->assertFalse($text->contains('This should be deleted.'));
@@ -135,7 +135,7 @@ class PdfLibreOfficeTest extends PHPUnit_Framework_TestCase
 
 		$document->save('./tests/output/LibreOfficeCloneRow.pdf');
 
-		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeCloneRow.pdf'))->to('ascii');
+		$text = Str::s($this->pdfBox->textFromPdfFile('./tests/output/LibreOfficeCloneRow.pdf'))->toAscii();
 
 		$this->assertTrue($text->contains('Value 1: Sun'));
 		$this->assertTrue($text->contains('Value 2: Mercury'));
@@ -148,8 +148,8 @@ class PdfLibreOfficeTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($text->contains('Value 9: Neptun'));
 		$this->assertTrue($text->contains('Value 10: Pluto'));
 
-		$this->assertTrue($text->contains("1 Name TaylorFirst name JamesPhone +1 428 889 773"));
-		$this->assertTrue($text->contains("2 Name BellFirst name RobertPhone +1 428 889 774"));
-		$this->assertTrue($text->contains("3 Name RayFirst name MichaelPhone +1 428 889 775"));
+		$this->assertTrue($text->contains("1 Name Taylor\nFirst name James\nPhone +1 428 889 773"));
+		$this->assertTrue($text->contains("2 Name Bell\nFirst name Robert\nPhone +1 428 889 774"));
+		$this->assertTrue($text->contains("3 Name Ray\nFirst name Michael\nPhone +1 428 889 775"));
 	}
 }
